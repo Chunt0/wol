@@ -1,0 +1,9 @@
+{
+	"name": "wol",
+	"private": true,
+	"scripts": {
+		"dev": "pnpm -F client run dev && pnpm -F server run dev",
+		"build": "pnpm -F client run build && pnpm -F server run build",
+		"start": "pnpm -F server run start"
+	}
+}

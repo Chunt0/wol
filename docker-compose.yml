@@ -1,0 +1,30 @@
+services:
+  wol:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    image: client
+    ports:
+      - "5173:5173"
+    restart: unless-stopped
+
+  wol-backend:
+    # Use bridge networking with explicit port mapping to ensure broadcasts work and container does not rely on host network namespace
+    network_mode: host
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    image: server
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: "4000"
+      IP: "192.168.254.12"
+      MAC: "08bfb886909c"
+      WAKE_SECRET: "n3ll4b3ll4"
+
+    depends_on:
+      - wol
+
